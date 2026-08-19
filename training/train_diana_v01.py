@@ -163,6 +163,22 @@ def main():
     X_train = (X_train - mean) / std
     X_val = (X_val - mean) / std
 
+    preprocessing_path = OUTPUT_DIR / "diana_v01_preprocessing.npz"
+    OUTPUT_DIR.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    np.savez(
+        preprocessing_path,
+        mean=mean.astype(np.float32),
+        std=std.astype(np.float32),
+    )
+
+    print(
+        f"Preprocessing data: {preprocessing_path}"
+    )
+
     # --------------------------------------------------------
     # Build small DNN
     # --------------------------------------------------------

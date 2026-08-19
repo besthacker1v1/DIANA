@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+
+# DIANA datasets
+positive/
+negative/
+training/positive/
+training/negative/
+training/dataset/
+
+# Trained model output
+training/output/
+
+# Local secrets
+.env
+*.env
+
+# Logs
+*.log

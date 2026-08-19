@@ -1,0 +1,50 @@
+model_name: "diana"
+
+target_phrase:
+  - "diana"
+
+custom_negative_phrases:
+  - "diane"
+  - "dians"
+  - "deanna"
+  - "dina"
+  - "diana here"
+
+n_samples: 20000
+n_samples_val: 2000
+
+tts_batch_size: 25
+
+feature_data_files:
+  "ACAV100M_sample": "./openwakeword_features_ACAV100M_2000_hrs_16bit.npy"
+
+batch_n_per_class:
+  "ACAV100M_sample": 256
+  "adversarial_negative": 50
+  "positive": 50
+
+model_type: "dnn"
+layer_size: 32
+
+steps: 30000
+
+max_negative_weight: 1500
+target_false_positives_per_hour: 0.2
+
+output_dir: "./output"
+
+piper_sample_generator_path: "./piper-sample-generator"
+
+background_paths:
+  - "./background"
+
+background_paths_duplication_rate:
+  - 1
+
+rir_paths:
+  - "./rir"
+
+false_positive_validation_data_path: "./openwakeword_features_ACAV100M_2000_hrs_16bit.npy"
+
+augmentation_rounds: 1
+augmentation_batch_size: 32

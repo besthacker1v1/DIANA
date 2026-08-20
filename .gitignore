@@ -36,3 +36,4 @@ training/output/
 
 # Logs
 *.log
+diana/speech/models/

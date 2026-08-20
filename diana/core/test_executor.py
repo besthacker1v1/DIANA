@@ -1,26 +1,34 @@
-import subprocess
+from command_executor import CommandExecutor
 
 
-class CommandExecutor:
+def main():
+    executor = CommandExecutor(dry_run=True)
 
-    def execute(self, command):
-        command = command.lower().strip()
+    test_commands = [
+        "open edge",
+        "open microsoft edge",
+        "launch edge",
+        "launch microsoft edge",
+        "start edge",
+        "start microsoft edge",
+        "open chrome",
+        "launch chrome",
+        "start chrome",
+        "open google chrome",
+        "open firefox",
+    ]
 
-        if "open edge" in command or "open microsoft edge" in command:
-            print("DIANA: Opening Microsoft Edge...")
-            subprocess.Popen(
-                ["cmd", "/c", "start", "", "msedge"],
-                shell=False,
-            )
-            return True
+    print("=" * 60)
+    print("DIANA COMMAND EXECUTOR TEST")
+    print("=" * 60)
 
-        if "open chrome" in command:
-            print("DIANA: Opening Chrome...")
-            subprocess.Popen(
-                ["cmd", "/c", "start", "", "chrome"],
-                shell=False,
-            )
-            return True
+    for command in test_commands:
+        print(f"\nTEST: {command}")
 
-        print(f"DIANA: I don't know how to do: {command}")
-        return False
+        result = executor.execute(command)
+
+        print(f"RESULT: {result}")
+
+
+if __name__ == "__main__":
+    main()

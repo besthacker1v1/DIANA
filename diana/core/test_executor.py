@@ -5,16 +5,31 @@ def main():
     executor = CommandExecutor(dry_run=True)
 
     test_commands = [
+        # Edge
         "open edge",
         "open microsoft edge",
         "launch edge",
-        "launch microsoft edge",
         "start edge",
-        "start microsoft edge",
+
+        # Chrome
         "open chrome",
         "launch chrome",
         "start chrome",
         "open google chrome",
+
+        # Notepad
+        "open notepad",
+        "open notes pad",
+
+        # Calculator
+        "open calculator",
+        "open calc",
+
+        # VS Code
+        "open vs code",
+        "open visual studio code",
+
+        # Unknown
         "open firefox",
     ]
 

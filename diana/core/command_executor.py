@@ -2,74 +2,114 @@ import subprocess
 
 
 class CommandExecutor:
+
     def __init__(self, dry_run=False):
         self.dry_run = dry_run
+
+    def _launch(self, command):
+        if self.dry_run:
+            print(f"[DRY RUN] Would launch: {command}")
+            return
+
+        subprocess.Popen(
+            command,
+            shell=False,
+        )
 
     def execute(self, command):
         command = command.lower().strip()
 
-        intent = self._detect_intent(command)
-
-        if intent == "open_edge":
-            return self._open_edge()
-
-        if intent == "open_chrome":
-            return self._open_chrome()
-
-        print(f"DIANA: I don't know how to do: {command}")
-        return False
-
-    def _detect_intent(self, command):
-
-        edge_phrases = [
+        # -------------------------
+        # Microsoft Edge
+        # -------------------------
+        if any(phrase in command for phrase in [
             "open edge",
             "open microsoft edge",
             "launch edge",
             "launch microsoft edge",
             "start edge",
             "start microsoft edge",
-        ]
+        ]):
+            print("DIANA: Opening Microsoft Edge...")
 
-        chrome_phrases = [
+            self._launch(
+                ["cmd", "/c", "start", "", "msedge"]
+            )
+
+            return True
+
+        # -------------------------
+        # Google Chrome
+        # -------------------------
+        if any(phrase in command for phrase in [
             "open chrome",
-            "launch chrome",
-            "start chrome",
             "open google chrome",
+            "launch chrome",
             "launch google chrome",
-        ]
+            "start chrome",
+            "start google chrome",
+        ]):
+            print("DIANA: Opening Chrome...")
 
-        if any(phrase in command for phrase in edge_phrases):
-            return "open_edge"
+            self._launch(
+                ["cmd", "/c", "start", "", "chrome"]
+            )
 
-        if any(phrase in command for phrase in chrome_phrases):
-            return "open_chrome"
-
-        return None
-
-    def _open_edge(self):
-        print("DIANA: Opening Microsoft Edge...")
-
-        if self.dry_run:
-            print("[DRY RUN] Would launch: msedge")
             return True
 
-        subprocess.Popen(
-            ["cmd", "/c", "start", "", "msedge"],
-            shell=False,
-        )
+        # -------------------------
+        # Notepad
+        # -------------------------
+        if any(phrase in command for phrase in [
+            "open notepad",
+            "open notes pad",
+            "launch notepad",
+            "launch notes pad",
+            "start notepad",
+            "start notes pad",
+        ]):
+            print("DIANA: Opening Notepad...")
 
-        return True
+            self._launch(["notepad.exe"])
 
-    def _open_chrome(self):
-        print("DIANA: Opening Chrome...")
-
-        if self.dry_run:
-            print("[DRY RUN] Would launch: chrome")
             return True
 
-        subprocess.Popen(
-            ["cmd", "/c", "start", "", "chrome"],
-            shell=False,
-        )
+        # -------------------------
+        # Calculator
+        # -------------------------
+        if any(phrase in command for phrase in [
+            "open calculator",
+            "open calc",
+            "launch calculator",
+            "launch calc",
+            "start calculator",
+            "start calc",
+        ]):
+            print("DIANA: Opening Calculator...")
 
-        return True
+            self._launch(["calc.exe"])
+
+            return True
+
+        # -------------------------
+        # Visual Studio Code
+        # -------------------------
+        if any(phrase in command for phrase in [
+            "open vs code",
+            "open visual studio code",
+            "launch vs code",
+            "launch visual studio code",
+            "start vs code",
+            "start visual studio code",
+        ]):
+            print("DIANA: Opening Visual Studio Code...")
+
+            self._launch(["code"])
+
+            return True
+
+        # -------------------------
+        # Unknown command
+        # -------------------------
+        print(f"DIANA: I don't know how to do: {command}")
+        return False
